@@ -1,6 +1,6 @@
 #include <Servo.h>
 #include <math.h>
-#include <L298N.h>   // Include the L298N library for the DC motor
+#include <L298N.h>
 
 //--------------------- Motor (Extruder) Definitions ---------------------//
 // Define the pins for the L298N H-bridge controlling the DC motor.
@@ -27,8 +27,8 @@ const float L1 = 10.0;
 const float L2 = 10.0;
 
 //--------------------- Data Structures ---------------------//
-// Now each drawing point also includes an extrusion flag.
-// Coordinates here are defined in platform coordinates.
+// Coordinates here are defined in platform coordinates
+// Each drawing point also includes an extrusion flag to signal the frosting motor
 struct Point {
   float x;
   float y;
@@ -43,8 +43,8 @@ Servo servo2;  // Elbow joint
 
 // Current servo angles (in servo units, 0-180)
 // Initial positions are defined relative to the servo’s perspective.
-int currentAngle1 = 90; // starting angle for servo1 (pointing right)
-int currentAngle2 = 90; // starting angle for servo2 (pointing right)
+int currentAngle1 = 180; // starting angle for servo1 (pointing up)
+int currentAngle2 = 180; // starting angle for servo2 (pointing up)
 
 //--------------------- Inverse Kinematics ---------------------//
 /*
@@ -103,7 +103,7 @@ void moveToCoordinate(float platformX, float platformY, unsigned long duration) 
   float targetAngle1, targetAngle2;
   
   if (!calculateServoAngles(adjustedX, adjustedY, targetAngle1, targetAngle2)) {
-    Serial.print("Target unreachable (Platform Coordinates): (");
+    Serial.print("Target unreachable. Platform Coordinates: (");
     Serial.print(platformX);
     Serial.print(", ");
     Serial.print(platformY);
@@ -111,16 +111,8 @@ void moveToCoordinate(float platformX, float platformY, unsigned long duration) 
     return;
   }
   
-  // Debug output: show platform coordinate, adjusted servo coordinate, and calculated angles.
-  Serial.print("Moving to platform coordinate (");
-  Serial.print(platformX);
-  Serial.print(", ");
-  Serial.print(platformY);
-  Serial.print(") -> Servo coordinate (");
-  Serial.print(adjustedX);
-  Serial.print(", ");
-  Serial.print(adjustedY);
-  Serial.print(") with angles -> Shoulder: ");
+  // Debug output: show platform coordinate and calculated angles.
+  Serial.print("Angles -> Shoulder: ");
   Serial.print(targetAngle1);
   Serial.print("°, Elbow: ");
   Serial.println(targetAngle2);
@@ -193,11 +185,13 @@ void drawShape(Point shape[], int numPoints) {
 // In this example, we start by moving to the start without extruding,
 // then draw the star outline with extrusion.
 Point starShape[] = {
-  {7.5, 10.0, 2000, false},  // Move to start (top center) without extruding
-  {12.0, 5.0, 2000, true},   // Draw star: extrude frosting
-  {7.5, 0.0, 2000, true},
-  {3.0, 5.0, 2000, true},
-  {7.5, 10.0, 2000, true}    // Return to start with extrusion
+  {7.5, 9.0, 5000, false},    // Top center (inside top border)
+  {5.0, 2.0, 5000, true},    // Bottom left
+  {11.0, 6.0, 5000, true},   // Middle right
+  {4.0, 6.0, 5000, true},    // Middle left
+  {10.0, 2.0, 5000, true},   // Bottom right
+  {7.5, 9.0, 5000, true},    // Return to top center
+  {7.5, 9.0, 10, false},   // Stops the extrusion
 };
 int numStarPoints = sizeof(starShape) / sizeof(starShape[0]);
 
