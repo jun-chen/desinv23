@@ -5,26 +5,26 @@
 //--------------------- Motor (Extruder) Definitions ---------------------//
 // Define the pins for the L298N H-bridge controlling the DC motor.
 // Adjust these pins as needed.
-const int motorIn1Pin = 2;
-const int motorIn2Pin = 3;
-const int motorEnablePin = 4;
-const int motorSpeed = 255;   // Speed value (0-255)
+const int motorIn1Pin = 8;
+const int motorIn2Pin = 7;
+const int motorEnablePin = 9;
+const int motorSpeed = 254;   // Speed value (0-255)
 
-// Create an L298N motor object (assuming the library constructor takes (in1, in2, enable))
-L298N dcMotor(motorIn1Pin, motorIn2Pin, motorEnablePin);
+// Create an L298N motor object (assuming the library constructor takes (enable, in1, in2))
+L298N dcMotor(motorEnablePin, motorIn1Pin, motorIn2Pin);
 
 //--------------------- Platform and Arm Definitions ---------------------//
 // Platform dimensions (cm)
-const float platformWidth = 15.0;
-const float platformHeight = 10.0;
+const float platformWidth = 18.0;
+const float platformHeight = 11.5;
 
 // Servo mounting position in platform coordinates (top left corner)
 const float servoBaseX = 0;
-const float servoBaseY = platformHeight;  // 10 cm
+const float servoBaseY = 12; 
 
 // Arm segment lengths (in cm)
-const float L1 = 10.0;
-const float L2 = 10.0;
+const float L1 = 9;
+const float L2 = 9;
 
 //--------------------- Data Structures ---------------------//
 // Coordinates here are defined in platform coordinates
@@ -43,8 +43,8 @@ Servo servo2;  // Elbow joint
 
 // Current servo angles (in servo units, 0-180)
 // Initial positions are defined relative to the servo’s perspective.
-int currentAngle1 = 180; // starting angle for servo1 (pointing up)
-int currentAngle2 = 180; // starting angle for servo2 (pointing up)
+int currentAngle1 = 90; // starting angle for servo1 (pointing up)
+int currentAngle2 = 90; // starting angle for servo2 (pointing up)
 
 //--------------------- Inverse Kinematics ---------------------//
 /*
@@ -156,7 +156,7 @@ void drawShape(Point shape[], int numPoints) {
     // Toggle the frosting motor based on the extrude flag
     if (shape[i].extrude) {
       Serial.println("Extruder ON");
-      dcMotor.setSpeed(motorSpeed);
+      dcMotor.setSpeed(255);
       dcMotor.forward();
     } else {
       Serial.println("Extruder OFF");
@@ -185,13 +185,13 @@ void drawShape(Point shape[], int numPoints) {
 // In this example, we start by moving to the start without extruding,
 // then draw the star outline with extrusion.
 Point starShape[] = {
-  {7.5, 9.0, 5000, false},    // Top center (inside top border)
-  {5.0, 2.0, 5000, true},    // Bottom left
-  {11.0, 6.0, 5000, true},   // Middle right
-  {4.0, 6.0, 5000, true},    // Middle left
-  {10.0, 2.0, 5000, true},   // Bottom right
-  {7.5, 9.0, 5000, true},    // Return to top center
-  {7.5, 9.0, 10, false},   // Stops the extrusion
+  {7.5, 7.0, 3000, false},    // Top center (inside top border)
+  {6.0, 2.0, 5000, true},    // Bottom left
+  {10.0, 5.0, 3500, true},   // Middle right
+  {5.0, 5.0, 3500, true},    // Middle left
+  {9.0, 2.0, 3500, true},   // Bottom right
+  {7.5, 7.0, 3500, true},    // Return to top center
+  {7.5, 7.0, 10, false},   // Stops the extrusion
 };
 int numStarPoints = sizeof(starShape) / sizeof(starShape[0]);
 
@@ -199,8 +199,8 @@ int numStarPoints = sizeof(starShape) / sizeof(starShape[0]);
 
 void setup() {
   // Attach servos to Arduino pins (update pin numbers if required)
-  servo1.attach(9);
-  servo2.attach(10);
+  servo1.attach(6); // shoulder
+  servo2.attach(5); // elbow
   
   // Set initial servo positions (using servo-based angles)
   servo1.write(currentAngle1);
@@ -214,6 +214,8 @@ void setup() {
   Serial.println("Platform-based coordinates active with extruder control.");
   Serial.println("Press '1' to draw a star shape.");
   // TODO: Add more options for additional shapes.
+
+  dcMotor.setSpeed(motorSpeed);
 }
 
 void loop() {

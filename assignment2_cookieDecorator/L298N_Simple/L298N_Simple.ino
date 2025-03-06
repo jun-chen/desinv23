@@ -18,8 +18,8 @@ Wiring schema in file "L298N - Schema_with_EN_pin.png"
 #include <L298N.h>
 
 // Pin definition
-const unsigned int IN1 = 7;
-const unsigned int IN2 = 8;
+const unsigned int IN1 = 8;
+const unsigned int IN2 = 7;
 const unsigned int EN = 9;
 
 // Create one motor instance
@@ -37,12 +37,12 @@ void setup()
   }
 
   // Set initial speed
-  motor.setSpeed(255);
+  motor.setSpeed(100);
 }
 
 void loop()
 {
-  motor.backward();
+  motor.forward();
 }
 
 /*
