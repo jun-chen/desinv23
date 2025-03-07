@@ -5,9 +5,9 @@
 //--------------------- Motor (Extruder) Definitions ---------------------//
 // Define the pins for the L298N H-bridge controlling the DC motor.
 // Adjust these pins as needed.
-const int motorIn1Pin = 8;
-const int motorIn2Pin = 7;
-const int motorEnablePin = 9;
+const int motorIn1Pin = 10;
+const int motorIn2Pin = 9;
+const int motorEnablePin = 11;
 const int motorSpeed = 254;   // Speed value (0-255)
 
 // Create an L298N motor object (assuming the library constructor takes (enable, in1, in2))
