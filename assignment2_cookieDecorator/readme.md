@@ -1,2 +1,2 @@
 # COOKIE BOT 3000
-<a href="https://github.com/jun-chen/desinv23/tree/main/assignment2_cookieDecorator">Documentation Link</a>
+<a href="https://docs.google.com/document/d/1-30iLnTaf8FX8p8_KAcYVlm6cOtlekmy5VO4k4IwsS4/edit?usp=sharing">Documentation Link</a>
