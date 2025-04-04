@@ -1,14 +1,14 @@
-/* 
-BeatBox
+/* BeatBox
 
 Play drums with your fingertips!
+
+Created April 4th, 2025
+By Jun Chen, Sunyu Jung
 
 The Circuit:
 * 3 LDR as input
 * 3 Solenoid as output through two L298N H-Bridge
 
-Created April 4th, 2025
-By Jun Chen, Sunyu Jung
 */
 
 // --- Constants & Pins ---
