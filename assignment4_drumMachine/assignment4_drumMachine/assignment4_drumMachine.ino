@@ -1,3 +1,16 @@
+/* 
+BeatBox
+
+Play drums with your fingertips!
+
+The Circuit:
+* 3 LDR as input
+* 3 Solenoid as output through two L298N H-Bridge
+
+Created April 4th, 2025
+By Jun Chen, Sunyu Jung
+*/
+
 // --- Constants & Pins ---
 const int ldrPins[3] = {A0, A1, A2};
 

@@ -1,3 +1,16 @@
+/* 
+COOKIE BOT 9000
+
+Decorates your cookies for you!
+
+The Circuit:
+* 2 Servos as output for the arm of the robot
+* 1 DC Motor as output for the frosting dispenser
+
+Created March 7th, 2025
+By Jun Chen, Sunyu Jung
+*/
+
 #include <Servo.h>
 #include <math.h>
 #include <L298N.h>
