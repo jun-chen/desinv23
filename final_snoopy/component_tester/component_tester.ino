@@ -1,5 +1,14 @@
-/*
-  Component Tester — Ultrasonic Sensor, Button, LDR, + 8 LEDs
+/* Own a Snoopy Component Tester
+
+To test all components to make sure they work properly
+
+Created May 7th, 2025
+By Jun Chen, Sunyu Jung
+
+The Circuit:
+* Button, LDR, and Ultrasonic Sensor as input
+* 8 LEDs, and serial readout of sensor readings as output
+  
   -----------------------------------------------------------
   • Reports the state of every input to the Serial Monitor every 100 ms  
   • LED animation:  
@@ -14,19 +23,19 @@
 
 /* ---------- Pin assignments ---------- */
 const int LDR_PIN      = A0;
-const int BUTTON_PIN   = 13;      // Uses internal pull‑up
+const int BUTTON_PIN   = 13;
 const int TRIG_PIN     = 11;
 const int ECHO_PIN     = 12;
 const int LED_PINS[8]  = {10, 9, 8, 7, 6, 5, 4, 3};
 
 const byte  NUM_LEDS        = 8;
-const unsigned int MAX_CM   = 300;      // Max range for NewPing (change if needed)
+const unsigned int MAX_CM   = 300;      // Max range for NewPing
 
 /* ---------- Objects & timers ---------- */
 NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_CM);
 
 unsigned long lastSerial   = 0;
-const  unsigned long SERIAL_PERIOD = 100;   // 100 ms
+const  unsigned long SERIAL_PERIOD = 100;
 
 unsigned long lastAnim     = 0;
 int  animStep              = -1;            // –1  ➜ “all‑on” phase
@@ -43,11 +52,10 @@ void setup() {
   }
 }
 
-/* ---------- Main loop ---------- */
 void loop() {
   unsigned long now = millis();
 
-  /* ---- 1.  Periodic serial report ---- */
+  /* ---- Periodic serial report ---- */
   if (now - lastSerial >= SERIAL_PERIOD) {
     bool  buttonPressed = (digitalRead(BUTTON_PIN) == LOW);   // 1 = pressed
     int   ldrValue      = analogRead(LDR_PIN);                // 0‑1023
@@ -63,7 +71,7 @@ void loop() {
     lastSerial = now;
   }
 
-  /* ---- 2.  LED animation ---- */
+  /* ----   LED animation ---- */
   if (animStep == -1) {                     // *** Phase A: all LEDs ON ***
     for (byte i = 0; i < NUM_LEDS; ++i) digitalWrite(LED_PINS[i], HIGH);
 
