@@ -1,3 +1,23 @@
+/* Own a Snoopy
+
+Have you ever watched Snoopy dance across the screen and thought, 
+“Man, I wish I could just give that little guy a head scratch”? 
+well, WISH NO MORE! Introducing OWN A SNOOPY, your very own interactive 
+Snoopy experience!!!
+
+
+Created May 7th, 2025
+By Jun Chen, Sunyu Jung
+
+The Circuit:
+* Button, LDR, and Ultrasonic Sensor as input
+* 8 LEDs, and serial as output
+
+The Purpose:
+* Interpret data from the three sensors
+* Send serial messages accordingly to p5.js for handling visuals
+*/
+
 #include <NewPing.h>
 
 // === PIN ASSIGNMENTS ===
