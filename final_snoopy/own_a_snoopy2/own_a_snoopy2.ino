@@ -1,10 +1,9 @@
 /* Own a Snoopy
 
-Have you ever watched Snoopy dance across the screen and thought, 
-“Man, I wish I could just give that little guy a head scratch”? 
-well, WISH NO MORE! Introducing OWN A SNOOPY, your very own interactive 
-Snoopy experience!!!
-
+Introducing OWN A SNOOPY! Be Charlie Brown and
+have your own physical Snoopy to interact with!
+You can pet him, feed him, and put him on his 
+iconic red house!
 
 Created May 7th, 2025
 By Jun Chen, Sunyu Jung
@@ -13,7 +12,7 @@ The Circuit:
 * Button, LDR, and Ultrasonic Sensor as input
 * 8 LEDs, and serial as output
 
-The Purpose:
+Function:
 * Interpret data from the three sensors
 * Send serial messages accordingly to p5.js for handling visuals
 */
